@@ -1,0 +1,2 @@
+# Cfn_sample_securitystack
+Cfnのネステッドスタックとクロススタック参照のサンプル（security）
