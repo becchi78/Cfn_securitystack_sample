@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: IAM Policy for EC2 Session Manager Access
+
+Parameters:
+  PolicyName:
+    Type: String
+    Description: Name of the IAM Policy
+  PolicyDocument:
+    Type: String
+    Description: JSON-formatted policy document as a string
+
+Resources:
+  EC2SessionManagerPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: !Ref PolicyName
+      PolicyDocument:
+        Fn::Transform:
+          Name: "AWS::Include"
+          Parameters:
+            Location: !Sub "${S3BucketURL}/policy.json"
+
+Outputs:
+  PolicyArn:
+    Description: The ARN of the managed policy
+    Value: !Ref EC2SessionManagerPolicy
+    Export:
+      Name: IAMPolicyStack-PolicyArn

@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Security Group Stack
+
+Parameters:
+  VpcId:
+    Type: String
+    Description: The ID of the VPC
+  SecurityGroupName:
+    Type: String
+    Description: Name of the Security Group
+  IngressRule1IpProtocol:
+    Type: String
+    Description: IP protocol for the first ingress rule (e.g., tcp, udp, icmp)
+  IngressRule1FromPort:
+    Type: Number
+    Description: Start of port range for the first ingress rule
+  IngressRule1ToPort:
+    Type: Number
+    Description: End of port range for the first ingress rule
+  IngressRule1CidrIp:
+    Type: String
+    Description: CIDR IP range for the first ingress rule
+  IngressRule2IpProtocol:
+    Type: String
+    Description: IP protocol for the second ingress rule (e.g., tcp, udp, icmp)
+  IngressRule2FromPort:
+    Type: Number
+    Description: Start of port range for the second ingress rule
+  IngressRule2ToPort:
+    Type: Number
+    Description: End of port range for the second ingress rule
+  IngressRule2CidrIp:
+    Type: String
+    Description: CIDR IP range for the second ingress rule
+
+Resources:
+  EC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Ref SecurityGroupName
+      GroupDescription: Enable HTTP and Session Manager access
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: !Ref IngressRule1IpProtocol
+          FromPort: !Ref IngressRule1FromPort
+          ToPort: !Ref IngressRule1ToPort
+          CidrIp: !Ref IngressRule1CidrIp
+        - IpProtocol: !Ref IngressRule2IpProtocol
+          FromPort: !Ref IngressRule2FromPort
+          ToPort: !Ref IngressRule2ToPort
+          CidrIp: !Ref IngressRule2CidrIp
+
+Outputs:
+  SecurityGroupId:
+    Description: The ID of the security group
+    Value: !Ref EC2SecurityGroup
+    Export:
+      Name: SecurityGroupId

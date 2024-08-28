@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Cfn sample Security Stack
+
+Parameters:
+  SecurityGroupName:
+    Type: String
+    Description: Name of the SecurityGroup
+  S3BucketURL:
+    Type: String
+    Description: URL of the S3 bucket containing the templates
+  IngressRule1IpProtocol:
+    Type: String
+    Description: IP protocol for the first ingress rule (e.g., tcp, udp, icmp)
+  IngressRule1FromPort:
+    Type: Number
+    Description: Start of port range for the first ingress rule
+  IngressRule1ToPort:
+    Type: Number
+    Description: End of port range for the first ingress rule
+  IngressRule1CidrIp:
+    Type: String
+    Description: CIDR IP range for the first ingress rule
+  IngressRule2IpProtocol:
+    Type: String
+    Description: IP protocol for the second ingress rule (e.g., tcp, udp, icmp)
+  IngressRule2FromPort:
+    Type: Number
+    Description: Start of port range for the second ingress rule
+  IngressRule2ToPort:
+    Type: Number
+    Description: End of port range for the second ingress rule
+  IngressRule2CidrIp:
+    Type: String
+    Description: CIDR IP range for the second ingress rule
+
+Resources:
+  SecurityGroupStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${S3BucketURL}/security-group.yaml"
+      Parameters:
+        VpcId: !ImportValue NetworkStack-VpcId
+        SecurityGroupName: !Ref SecurityGroupName
+        IngressRule1IpProtocol: !Ref IngressRule1IpProtocol
+        IngressRule1FromPort: !Ref IngressRule1FromPort
+        IngressRule1ToPort: !Ref IngressRule1ToPort
+        IngressRule1CidrIp: !Ref IngressRule1CidrIp
+        IngressRule2IpProtocol: !Ref IngressRule2IpProtocol
+        IngressRule2FromPort: !Ref IngressRule2FromPort
+        IngressRule2ToPort: !Ref IngressRule2ToPort
+        IngressRule2CidrIp: !Ref IngressRule2CidrIp
+
+Outputs:
+  SecurityGroupId:
+    Description: The ID of the security group
+    Value: GetAtt SecurityGroupStack.Outputs.SecurityGroupId

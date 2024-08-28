@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: IAM Role Stack for EC2
+
+Parameters:
+  RoleName:
+    Type: String
+    Description: Name of the IAM Role
+  PolicyArn:
+    Type: String
+    Description: ARN of the policy to attach to the EC2 instance role
+
+Resources:
+  EC2InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref RoleName
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - !Ref PolicyArn # 別のスタックから渡されたポリシーARNをアタッチ
+
+Outputs:
+  InstanceRoleArn:
+    Description: The ARN of the EC2 instance role
+    Value: !GetAtt EC2InstanceRole.Arn
+    Export:
+      Name: InstanceRoleArn
