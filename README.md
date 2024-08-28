@@ -28,3 +28,16 @@ aws cloudformation create-stack \
 ```bash
 aws cloudformation delete-stack --stack-name SecurityStack
 ```
+
+## 問題点
+
+ingress や egress のルールを外部の json ファイルに記述して読み込ませることで、template の再利用性を高めようとしたがどうしても解決できず。
+以下のようにしても`Transform AWS::Include failed with: The specified S3 object's content should be valid Yaml/JSON`というエラーが出てダメだった
+
+```yaml
+SecurityGroupIngress:
+  Fn::Transform:
+    Name: AWS::Include
+    Parameters:
+      Location: !Ref IngressFileURL
+```
