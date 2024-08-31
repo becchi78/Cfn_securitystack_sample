@@ -21,7 +21,6 @@ aws cloudformation create-stack \
   --template-body file://root-template.yaml \
   --parameters file://param/parameters.json \
   --capabilities CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
-
 ```
 
 ## 削除
@@ -29,3 +28,14 @@ aws cloudformation create-stack \
 ```bash
 aws cloudformation delete-stack --stack-name SecurityStack
 ```
+
+## Output
+
+| キー                | 説明                          | エクスポート名                    |
+| ------------------- | ----------------------------- | --------------------------------- |
+| Ec2KeyPairName      | The Ec2 Key Pair Name         | SecurityStack-Ec2KeyPairName      |
+| IAMPolicyArn        | The ARN of the managed policy | SecurityStack-IAMPolicyArn        |
+| IAMRoleArn          | The ARN of the IAM role       | SecurityStack-IAMRoleArn          |
+| IAMRoleName         | The Name of the IAM role      | SecurityStack-RoleName            |
+| InstanceProfileName | The Name of the InstanceProfile name      | SecurityStack-InstanceProfileName |
+| SecurityGroupId     | The ID of the security group  | SecurityStack-SecurityGroupId     |

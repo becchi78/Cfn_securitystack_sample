@@ -75,7 +75,7 @@ Outputs:
     Export:
       Name: SecurityStack-RoleName
   InstanceProfileName:
-    Description: The Name of the IAM role
+    Description: The Name of the InstanceProfile name
     Value: !GetAtt IAMRoleStack.Outputs.InstanceProfileName
     Export:
       Name: SecurityStack-InstanceProfileName
