@@ -23,10 +23,25 @@ Resources:
             Action: sts:AssumeRole
       ManagedPolicyArns:
         - !Ref PolicyArn
+  EC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref EC2SessionManagerRole
 
 Outputs:
   RoleArn:
     Description: The ARN of the IAM role
-    Value: !Ref EC2SessionManagerRole
+    Value: !GetAtt EC2SessionManagerRole.Arn
     Export:
       Name: IAMRole-RoleArn
+  RoleName:
+    Description: The name of the IAM role
+    Value: !Ref EC2SessionManagerRole
+    Export:
+      Name: IAMRole-RoleName
+  InstanceProfileName:
+    Description: The name of the IAM Instance Profile
+    Value: !Ref EC2InstanceProfile
+    Export:
+      Name: IAMRole-InstanceProfileName

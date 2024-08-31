@@ -69,6 +69,16 @@ Outputs:
     Value: !GetAtt IAMRoleStack.Outputs.RoleArn
     Export:
       Name: SecurityStack-IAMRoleArn
+  IAMRoleName:
+    Description: The Name of the IAM role
+    Value: !GetAtt IAMRoleStack.Outputs.RoleName
+    Export:
+      Name: SecurityStack-RoleName
+  InstanceProfileName:
+    Description: The Name of the IAM role
+    Value: !GetAtt IAMRoleStack.Outputs.InstanceProfileName
+    Export:
+      Name: SecurityStack-InstanceProfileName
   Ec2KeyPairName:
     Description: The Ec2 Key Pair Name
     Value: !GetAtt Ec2KeyPairStack.Outputs.Ec2KeyPairName
