@@ -8,30 +8,15 @@ Parameters:
   S3BucketURL:
     Type: String
     Description: URL of the S3 bucket containing the templates
-  IngressRule1IpProtocol:
+  S3Bucket:
     Type: String
-    Description: IP protocol for the first ingress rule (e.g., tcp, udp, icmp)
-  IngressRule1FromPort:
-    Type: Number
-    Description: Start of port range for the first ingress rule
-  IngressRule1ToPort:
-    Type: Number
-    Description: End of port range for the first ingress rule
-  IngressRule1CidrIp:
+    Description: URL of the S3 bucket containing the templates
+  PolicyName:
     Type: String
-    Description: CIDR IP range for the first ingress rule
-  IngressRule2IpProtocol:
+    Description: Name of the IAM Policy
+  RoleName:
     Type: String
-    Description: IP protocol for the second ingress rule (e.g., tcp, udp, icmp)
-  IngressRule2FromPort:
-    Type: Number
-    Description: Start of port range for the second ingress rule
-  IngressRule2ToPort:
-    Type: Number
-    Description: End of port range for the second ingress rule
-  IngressRule2CidrIp:
-    Type: String
-    Description: CIDR IP range for the second ingress rule
+    Description: Name of the IAM Role
 
 Resources:
   SecurityGroupStack:
@@ -41,16 +26,30 @@ Resources:
       Parameters:
         VpcId: !ImportValue NetworkStack-VpcId
         SecurityGroupName: !Ref SecurityGroupName
-        IngressRule1IpProtocol: !Ref IngressRule1IpProtocol
-        IngressRule1FromPort: !Ref IngressRule1FromPort
-        IngressRule1ToPort: !Ref IngressRule1ToPort
-        IngressRule1CidrIp: !Ref IngressRule1CidrIp
-        IngressRule2IpProtocol: !Ref IngressRule2IpProtocol
-        IngressRule2FromPort: !Ref IngressRule2FromPort
-        IngressRule2ToPort: !Ref IngressRule2ToPort
-        IngressRule2CidrIp: !Ref IngressRule2CidrIp
+
+  IAMPolicyStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${S3BucketURL}/iam-policy.yaml"
+      Parameters:
+        PolicyName: !Ref PolicyName
+        S3Bucket: !Ref S3Bucket
+
+  IAMRoleStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${S3BucketURL}/iam-role.yaml"
+      Parameters:
+        RoleName: !Ref RoleName
+        PolicyArn: !GetAtt IAMPolicyStack.Outputs.PolicyArn
 
 Outputs:
   SecurityGroupId:
     Description: The ID of the security group
     Value: GetAtt SecurityGroupStack.Outputs.SecurityGroupId
+  IAMPolicyArn:
+    Description: The ARN of the managed policy
+    Value: !GetAtt IAMPolicyStack.Outputs.PolicyArn
+  IAMRoleArn:
+    Description: The ARN of the IAM role
+    Value: !GetAtt IAMRoleStack.Outputs.RoleArn

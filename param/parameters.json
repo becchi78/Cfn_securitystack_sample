@@ -8,35 +8,15 @@
     "ParameterValue": "https://cfn-nested-sample.s3.ap-northeast-1.amazonaws.com/security"
   },
   {
-    "ParameterKey": "IngressRule1IpProtocol",
-    "ParameterValue": "tcp"
+    "ParameterKey": "S3Bucket",
+    "ParameterValue": "cfn-nested-sample"
   },
   {
-    "ParameterKey": "IngressRule1FromPort",
-    "ParameterValue": "80"
+    "ParameterKey": "PolicyName",
+    "ParameterValue": "MyEC2Policy"
   },
   {
-    "ParameterKey": "IngressRule1ToPort",
-    "ParameterValue": "80"
-  },
-  {
-    "ParameterKey": "IngressRule1CidrIp",
-    "ParameterValue": "0.0.0.0/0"
-  },
-  {
-    "ParameterKey": "IngressRule2IpProtocol",
-    "ParameterValue": "tcp"
-  },
-  {
-    "ParameterKey": "IngressRule2FromPort",
-    "ParameterValue": "443"
-  },
-  {
-    "ParameterKey": "IngressRule2ToPort",
-    "ParameterValue": "443"
-  },
-  {
-    "ParameterKey": "IngressRule2CidrIp",
-    "ParameterValue": "0.0.0.0/0"
+    "ParameterKey": "RoleName",
+    "ParameterValue": "MyEC2Role"
   }
 ]

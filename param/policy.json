@@ -42,8 +42,6 @@
         "ssm:DescribeAutomationExecutions",
         "ssm:DescribeAutomationStepExecutions",
         "ssm:DescribeOpsItems",
-        "ssm:DescribeOpsItemEvents",
-        "ssm:DescribeOpsMetadata",
         "ssm:DescribeInstancePatches",
         "ssm:DescribePatchProperties",
         "ssm:GetOpsItem",

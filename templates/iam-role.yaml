@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: IAM Role Stack for EC2
+Description: IAM Role for EC2 Session Manager Access
 
 Parameters:
   RoleName:
@@ -7,10 +7,10 @@ Parameters:
     Description: Name of the IAM Role
   PolicyArn:
     Type: String
-    Description: ARN of the policy to attach to the EC2 instance role
+    Description: The ARN of the managed policy to attach
 
 Resources:
-  EC2InstanceRole:
+  EC2SessionManagerRole:
     Type: AWS::IAM::Role
     Properties:
       RoleName: !Ref RoleName
@@ -21,13 +21,12 @@ Resources:
             Principal:
               Service: ec2.amazonaws.com
             Action: sts:AssumeRole
-      Path: /
       ManagedPolicyArns:
-        - !Ref PolicyArn # 別のスタックから渡されたポリシーARNをアタッチ
+        - !Ref PolicyArn
 
 Outputs:
-  InstanceRoleArn:
-    Description: The ARN of the EC2 instance role
-    Value: !GetAtt EC2InstanceRole.Arn
+  RoleArn:
+    Description: The ARN of the IAM role
+    Value: !Ref EC2SessionManagerRole
     Export:
-      Name: InstanceRoleArn
+      Name: IAMRole-RoleArn

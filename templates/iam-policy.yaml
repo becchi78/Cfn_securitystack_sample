@@ -5,9 +5,9 @@ Parameters:
   PolicyName:
     Type: String
     Description: Name of the IAM Policy
-  PolicyDocument:
+  S3Bucket:
     Type: String
-    Description: JSON-formatted policy document as a string
+    Description: URL of the S3 bucket containing the policy document
 
 Resources:
   EC2SessionManagerPolicy:
@@ -18,11 +18,11 @@ Resources:
         Fn::Transform:
           Name: "AWS::Include"
           Parameters:
-            Location: !Sub "${S3BucketURL}/policy.json"
+            Location: !Sub "s3://${S3Bucket}/security/policy.json"
 
 Outputs:
   PolicyArn:
     Description: The ARN of the managed policy
     Value: !Ref EC2SessionManagerPolicy
     Export:
-      Name: IAMPolicyStack-PolicyArn
+      Name: IAMPolicy-PolicyArn

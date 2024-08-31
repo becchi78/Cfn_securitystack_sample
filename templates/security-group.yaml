@@ -8,30 +8,6 @@ Parameters:
   SecurityGroupName:
     Type: String
     Description: Name of the Security Group
-  IngressRule1IpProtocol:
-    Type: String
-    Description: IP protocol for the first ingress rule (e.g., tcp, udp, icmp)
-  IngressRule1FromPort:
-    Type: Number
-    Description: Start of port range for the first ingress rule
-  IngressRule1ToPort:
-    Type: Number
-    Description: End of port range for the first ingress rule
-  IngressRule1CidrIp:
-    Type: String
-    Description: CIDR IP range for the first ingress rule
-  IngressRule2IpProtocol:
-    Type: String
-    Description: IP protocol for the second ingress rule (e.g., tcp, udp, icmp)
-  IngressRule2FromPort:
-    Type: Number
-    Description: Start of port range for the second ingress rule
-  IngressRule2ToPort:
-    Type: Number
-    Description: End of port range for the second ingress rule
-  IngressRule2CidrIp:
-    Type: String
-    Description: CIDR IP range for the second ingress rule
 
 Resources:
   EC2SecurityGroup:
@@ -41,14 +17,22 @@ Resources:
       GroupDescription: Enable HTTP and Session Manager access
       VpcId: !Ref VpcId
       SecurityGroupIngress:
-        - IpProtocol: !Ref IngressRule1IpProtocol
-          FromPort: !Ref IngressRule1FromPort
-          ToPort: !Ref IngressRule1ToPort
-          CidrIp: !Ref IngressRule1CidrIp
-        - IpProtocol: !Ref IngressRule2IpProtocol
-          FromPort: !Ref IngressRule2FromPort
-          ToPort: !Ref IngressRule2ToPort
-          CidrIp: !Ref IngressRule2CidrIp
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: "0.0.0.0/0"
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: "0.0.0.0/0"
+      SecurityGroupEgress:
+        - IpProtocol: "-1"
+          FromPort: 0
+          ToPort: 0
+          CidrIp: "0.0.0.0/0"
+      Tags:
+        - Key: Name
+          Value: MySG
 
 Outputs:
   SecurityGroupId:
