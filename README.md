@@ -10,6 +10,7 @@ templates/にある security-group.yaml と iam-role.yaml、iam-policy はあら
 aws s3 cp ./templates/security-group.yaml s3://cfn-nested-sample/security/
 aws s3 cp ./templates/iam-role.yaml s3://cfn-nested-sample/security/
 aws s3 cp ./templates/iam-policy.yaml s3://cfn-nested-sample/security/
+aws s3 cp ./templates/ec2keypair.yaml s3://cfn-nested-sample/security/
 ```
 
 ## デプロイ

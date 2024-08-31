@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Sample Key Pair Stack.
+
+Parameters:
+  KeyPairName:
+    Type: String
+    Description: The name of the key pair to be created.
+
+Resources:
+  Ec2KeyPairName:
+    Type: AWS::EC2::KeyPair
+    Properties:
+      KeyName: !Ref KeyPairName
+
+Outputs:
+  Ec2KeyPairName:
+    Description: The name of the key pair.
+    Value: !Ref Ec2KeyPairName
+    Export:
+      Name: Ec2KeyPairName

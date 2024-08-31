@@ -18,5 +18,9 @@
   {
     "ParameterKey": "RoleName",
     "ParameterValue": "MyEC2Role"
+  },
+  {
+    "ParameterKey": "Ec2KeyPairName",
+    "ParameterValue": "MyKeyPair"
   }
 ]

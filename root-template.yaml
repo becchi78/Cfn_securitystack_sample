@@ -17,6 +17,9 @@ Parameters:
   RoleName:
     Type: String
     Description: Name of the IAM Role
+  Ec2KeyPairName:
+    Type: String
+    Description: The name of the key pair to be created.
 
 Resources:
   SecurityGroupStack:
@@ -43,6 +46,13 @@ Resources:
         RoleName: !Ref RoleName
         PolicyArn: !GetAtt IAMPolicyStack.Outputs.PolicyArn
 
+  Ec2KeyPairStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${S3BucketURL}/ec2keypair.yaml"
+      Parameters:
+        KeyPairName: !Ref Ec2KeyPairName
+
 Outputs:
   SecurityGroupId:
     Description: The ID of the security group
@@ -59,3 +69,8 @@ Outputs:
     Value: !GetAtt IAMRoleStack.Outputs.RoleArn
     Export:
       Name: SecurityStack-IAMRoleArn
+  Ec2KeyPairName:
+    Description: The Ec2 Key Pair Name
+    Value: !GetAtt Ec2KeyPairStack.Outputs.Ec2KeyPairName
+    Export:
+      Name: SecurityStack-Ec2KeyPairName
