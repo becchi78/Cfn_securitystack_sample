@@ -1,10 +1,10 @@
-# Cfn_sample_securitystack
+# Cfn_securitystack_sample
 
 Cfn のネステッドスタックとクロススタック参照のサンプル（security）
 
 ## 準備
 
-templates/にある security-group.yaml と iam-role.yaml、iam-policy はあらかじめ S3 の cfn-nested-sample に置いておく。
+templates/にある yaml はあらかじめ S3 の cfn-nested-sample に置いておく。
 
 ```bash
 aws s3 cp ./templates/security-group.yaml s3://cfn-nested-sample/security/
