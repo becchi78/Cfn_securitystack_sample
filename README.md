@@ -4,7 +4,7 @@ Cfn のネステッドスタックとクロススタック参照のサンプル�
 
 ## 準備
 
-templates/にある yaml はあらかじめ S3 の cfn-nested-sample に置いておく。
+templates/にあるyamlはあらかじめ S3 の cfn-nested-sample/security に置いておく。
 
 ```bash
 aws s3 cp ./templates/security-group.yaml s3://cfn-nested-sample/security/
